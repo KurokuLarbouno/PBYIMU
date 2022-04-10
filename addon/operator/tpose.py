@@ -21,6 +21,7 @@ class MIMU_OP_Tpose(bpy.types.Operator):
     armerture = None
     sensors = None
     imuCount = 1000
+    readCount = 0
 
     @classmethod                    # 綁定在類別上，不需要實際建立物件即可呼叫
     def poll(cls, context):         
@@ -51,23 +52,21 @@ class MIMU_OP_Tpose(bpy.types.Operator):
         if(self.ser.is_open):
             as_bytes = ''
             # print(self.ser.in_waiting)
-            while(self.ser.in_waiting > 70):
+            while(self.ser.in_waiting > 40):
                 try:
                     as_bytes = self.ser.readline()
                 except:
                     print("as_bytes failed")
-                    readCount += 1
-                    if readCount > 500:
+                    self.readCount += 1
+                    if self.readCount > 500:
                         print("COM Port failed")
                         self._finish(context)
-                flag = 0
-                if(len(as_bytes) > 20):
-                    readCount = 0
-                    for sensor in self.sensors:
-                        flag += sensor.Tpose(as_bytes)
-                    if(flag == -3):
-                        self._finish(context)
+                # print(len(as_bytes))
 
+                if(len(as_bytes) > 20):
+                        self.readCount = 0
+                        for sensor in self.sensors:
+                            sensor.Tpose(as_bytes)
     # 輸入事件
     def modal(self, context, event):
         if event.type == 'TIMER':
@@ -94,7 +93,6 @@ class MIMU_OP_Tpose(bpy.types.Operator):
     def _finish(self, context):
         context.window_manager.event_timer_remove(self._timer)
         self.ser.close()
-        return {'CANCELLED'}
 
     def GetArmature():
         arm = bpy.data.objects['Armature']

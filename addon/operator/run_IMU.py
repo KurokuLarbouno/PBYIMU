@@ -98,6 +98,7 @@ class MIMU_OP_Run_IMU(bpy.types.Operator):
     def _finish(self, context):
         context.window_manager.event_timer_remove(self._timer)
         self.ser.close()
+        {'CANCELLED'}
 
     def GetArmature():
         arm = bpy.data.objects['Armature']

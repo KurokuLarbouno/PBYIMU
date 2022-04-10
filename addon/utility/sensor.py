@@ -66,7 +66,7 @@ class Sensor(object):
 
         if (myQuat !=  None):
             myEuler = mathutils.Euler((0, 0, 0), 'XYZ')
-
+            
             if self.TpCount < self.TpAmount:
                 self.offsetQuat += myQuat
                 self.TpCount += 1
@@ -75,15 +75,20 @@ class Sensor(object):
                 A = self.TpCount
                 self.offsetQuat = mathutils.Quaternion((Q.w/A, Q.x/A, Q.y/A, Q.z/A))
                 myEuler = self.offsetQuat.to_euler('XYZ')
-                #myEuler = mathutils.Euler((myEuler.x*57.3, myEuler.y*57.3,myEuler.z*57.3), 'XYZ')
+                myEuler = mathutils.Euler((myEuler.x*57.3, myEuler.y*57.3,myEuler.z*57.3), 'XYZ')
                 if self.devicename == '6':
-                    my_tool.my_float_vector6 = self.offsetQuat.to_euler('XYZ')
+                    my_tool.my_float_vector6.x = myEuler.x
+                    my_tool.my_float_vector6.y = myEuler.y
+                    my_tool.my_float_vector6.z = myEuler.z
                 elif self.devicename == '5':
-                    my_tool.my_float_vector5 = self.offsetQuat.to_euler('XYZ')
+                    my_tool.my_float_vector5.x = myEuler.x
+                    my_tool.my_float_vector5.y = myEuler.y
+                    my_tool.my_float_vector5.z = myEuler.z
                 elif self.devicename == '4':
-                    my_tool.my_float_vector4 = self.offsetQuat.to_euler('XYZ')
+                    my_tool.my_float_vector4.x = myEuler.x
+                    my_tool.my_float_vector4.y = myEuler.y
+                    my_tool.my_float_vector4.z = myEuler.z
                 self.TpCount = 0
-                return(-1)
 
         if(self.bone!= None):
             self.bone.rotation_mode = self.TransposeMethod
