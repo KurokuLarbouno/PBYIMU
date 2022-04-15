@@ -74,20 +74,24 @@ class Sensor(object):
                 Q = self.offsetQuat
                 A = self.TpCount
                 self.offsetQuat = mathutils.Quaternion((Q.w/A, Q.x/A, Q.y/A, Q.z/A))
-                myEuler = self.offsetQuat.to_euler('XYZ')
+                # myEuler = self.offsetQuat.to_euler('XYZ')
                 myEuler = mathutils.Euler((myEuler.x*57.3, myEuler.y*57.3,myEuler.z*57.3), 'XYZ')
                 if self.devicename == '6':
-                    my_tool.my_float_vector6.x = myEuler.x
-                    my_tool.my_float_vector6.y = myEuler.y
-                    my_tool.my_float_vector6.z = myEuler.z
+                    # my_tool.my_float_vector6.x = myEuler.x my_tool.my_float_vector6.y = myEuler.y my_tool.my_float_vector6.z = myEuler.z
+                    my_tool.my_quat_vector6.w = Q.w
+                    my_tool.my_quat_vector6.x = Q.x
+                    my_tool.my_quat_vector6.y = Q.y
+                    my_tool.my_quat_vector6.z = Q.z
                 elif self.devicename == '5':
-                    my_tool.my_float_vector5.x = myEuler.x
-                    my_tool.my_float_vector5.y = myEuler.y
-                    my_tool.my_float_vector5.z = myEuler.z
+                    my_tool.my_quat_vector5.w = Q.w
+                    my_tool.my_quat_vector5.x = Q.x
+                    my_tool.my_quat_vector5.y = Q.y
+                    my_tool.my_quat_vector5.z = Q.z
                 elif self.devicename == '4':
-                    my_tool.my_float_vector4.x = myEuler.x
-                    my_tool.my_float_vector4.y = myEuler.y
-                    my_tool.my_float_vector4.z = myEuler.z
+                    my_tool.my_quat_vector4.w = Q.w
+                    my_tool.my_quat_vector4.x = Q.x
+                    my_tool.my_quat_vector4.y = Q.y
+                    my_tool.my_quat_vector4.z = Q.z
                 self.TpCount = 0
 
         if(self.bone!= None):
@@ -116,16 +120,18 @@ class Sensor(object):
                 else:
                     finalQuat = mathutils.Quaternion((qW, qZ, qX, qY))
                     if(my_tool.my_sync == True):
-                        offEuler = mathutils.Euler((0,0,0))
+                        self.offsetQuat = mathutils.Quaternion((1, 0, 0, 0))
                         if self.devicename == '6':
-                            vector = my_tool.my_float_vector6
+                            # vector = my_tool.my_float_vector6
+                            Q = my_tool.my_quat_vector6
                         elif self.devicename == '5':
-                            vector = my_tool.my_float_vector5
+                            # vector = my_tool.my_float_vector5
+                            Q = my_tool.my_quat_vector5
                         elif self.devicename == '4':
-                            vector = my_tool.my_float_vector4                            
-                        offEuler = mathutils.Euler((vector.x, vector.y, vector.z))
-                        offQuat = offEuler.to_quaternion()
-                        finalQuat = finalQuat - offQuat
+                            # vector = my_tool.my_float_vector4                     
+                            Q = my_tool.my_quat_vector4
+                        self.offsetQuat = mathutils.Quaternion((Q.w, Q.x, Q.y, Q.z))
+                        finalQuat = finalQuat - self.offsetQuat
                     return finalQuat  
     
     def try2GetFloat(self, str, qOld):

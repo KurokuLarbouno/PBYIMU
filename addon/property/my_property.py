@@ -4,9 +4,12 @@ class MyProperties(bpy.types.PropertyGroup):
     
     my_string : bpy.props.StringProperty(name= "File Location")
     
-    my_float_vector6 : bpy.props.FloatVectorProperty(name= "R_UpArm", subtype='XYZ', precision=4, size=3, default= (0,0,0))
-    my_float_vector5 : bpy.props.FloatVectorProperty(name= "R_Fore", subtype='XYZ', precision=4, size=3, default= (0,0,0))
-    my_float_vector4 : bpy.props.FloatVectorProperty(name= "R_Hand", subtype='XYZ', precision=4, size=3, default= (0,0,0))
+    my_float_vector6 : bpy.props.FloatVectorProperty(name= "R_UpArm", subtype='XYZ', precision=2, size=3, default= (0,0,0))
+    my_float_vector5 : bpy.props.FloatVectorProperty(name= "R_Fore",  subtype='XYZ', precision=2, size=3, default= (0,0,0))
+    my_float_vector4 : bpy.props.FloatVectorProperty(name= "R_Hand",  subtype='XYZ', precision=2, size=3, default= (0,0,0))
+    my_quat_vector6  : bpy.props.FloatVectorProperty(name= "R_UpArm", subtype='XYZ', precision=2, size=4, default= (0,0,0,0))
+    my_quat_vector5  : bpy.props.FloatVectorProperty(name= "R_Fore",  subtype='XYZ', precision=2, size=4, default= (0,0,0,0))
+    my_quat_vector4  : bpy.props.FloatVectorProperty(name= "R_Hand",  subtype='XYZ', precision=2, size=4, default= (0,0,0,0))
     
     my_sync : bpy.props.BoolProperty(name= "sync", description= "control sync", default= False)
 
