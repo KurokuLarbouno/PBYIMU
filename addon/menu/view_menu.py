@@ -26,10 +26,10 @@ class MIMU_PT_View_Menu(bpy.types.Panel):
         layout.prop(mytool, "my_string")
         row = layout.row()
 
-        # layout.prop(mytool, "my_float_vector6")
-        # layout.prop(mytool, "my_float_vector5")
-        # layout.prop(mytool, "my_float_vector4")
-        # row = layout.row()
+        layout.prop(mytool, "my_float_vector6")
+        layout.prop(mytool, "my_float_vector5")
+        layout.prop(mytool, "my_float_vector4")
+        row = layout.row()
 
         layout.prop(mytool, "my_quat_vector6")
         layout.prop(mytool, "my_quat_vector5")
